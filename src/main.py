@@ -5,16 +5,24 @@ from superior_engine import SuperiorEngine
 def invert_board(board : str):
     return "\n".join(board.splitlines()[::-1])
 
+def display_board(b, colour):
+    # since we use darktheme, gotta invert colours when drawing board
+    print("----------------")
+    if (player_colour == chess.BLACK):
+        print(board.unicode(invert_color=True)[::-1])
+    else:
+        print(board.unicode(invert_color=True))
+
 # setup
 board = chess.Board()
-engine = SuperiorEngine()
+engine = SuperiorEngine(True)
 
 if len(sys.argv) > 1 and sys.argv[1] == "black":
     player_to_move = False
-    player_colour = "black"
+    player_colour = chess.BLACK
 else:
     player_to_move = True
-    player_colour = "white"
+    player_colour = chess.WHITE
 
 # time limit for the engine in seconds
 engine_time_limit = 2
@@ -22,14 +30,7 @@ if len(sys.argv) > 2:
     engine_time_limit = float(sys.argv[2])
 
 while not board.is_game_over(claim_draw=True):
-    # since we use darktheme, gotta invert colours when drawing board
-    print("----------------")
-    if (player_colour == 'black'):
-        print(board.unicode(invert_color=True)[::-1])
-    else:
-        print(board.unicode(invert_color=True))
-
-
+    display_board(board, player_colour)
     if (player_to_move):
         while player_to_move:
             next_move = input()
@@ -37,8 +38,7 @@ while not board.is_game_over(claim_draw=True):
                 try:
                     board.pop()
                     board.pop()
-                    print("----------------")
-                    print(board.unicode(invert_color = player_colour == "white"))
+                    display_board(board, player_colour)
                 except IndexError:
                     print("cannot takeback further")
             else:
@@ -48,7 +48,7 @@ while not board.is_game_over(claim_draw=True):
                 except ValueError:
                     print("invalid move you suck")
     else:
-        result = engine.play(board, time_limit=engine_time_limit)
+        result = engine.play(board, not player_colour, timelimit=engine_time_limit)
         board.push(result)
         player_to_move = True
 
