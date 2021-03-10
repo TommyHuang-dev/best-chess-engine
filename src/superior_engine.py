@@ -29,7 +29,7 @@ class SuperiorEngine:
         board = b.copy()
         
         bestmoves = []
-        bestmovesvalue = -20000
+        bestmovesvalue = -100000
 
         legalmoves = list(board.legal_moves)
         lines = legalmoves
@@ -41,7 +41,7 @@ class SuperiorEngine:
             board.push(nextmove)
             # get all responses and choose the best one (material wise). If theres a tie add both
             legalresponses = list(board.legal_moves)
-            bestresponseval = 20000
+            bestresponseval = 100000
             for response in legalresponses:
                 board.push(response)
                 val = self.calc_material_diff(board, turn)

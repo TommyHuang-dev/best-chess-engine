@@ -49,8 +49,10 @@ while not board.is_game_over(claim_draw=True):
                     print("invalid move you suck")
     else:
         result = engine.play(board, not player_colour, timelimit=engine_time_limit)
+        print("engine plays ", result)
         board.push(result)
         player_to_move = True
 
+display_board(board, player_colour)
 print("GAME OVER!!!")
 print(board.result(claim_draw=True))
