@@ -51,6 +51,7 @@ while not board.is_game_over(claim_draw=True):
         result = engine.play(board, not player_colour, timelimit=engine_time_limit)
         print("engine plays ", result)
         board.push(result)
+        print("engine diff: ", engine.calc_material_diff(board, chess.WHITE))
         player_to_move = True
 
 display_board(board, player_colour)
